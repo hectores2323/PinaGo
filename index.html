@@ -181,9 +181,8 @@ function createGenreSections(movies) {
         const card = document.createElement('div');
         card.className = 'movie-card';
         card.tabIndex = 0;
-        card.dataset.preview = movie.video; // <-- enlace de Google Sheets
         card.innerHTML = `
-            <a href="#" onclick="return false;">
+            <a href="${movie.video}" target="_blank">
                 <img src="${movie.poster}" alt="${movie.titulo}">
                 <div class="movie-title">${movie.titulo}</div>
             </a>
@@ -205,9 +204,8 @@ function createGenreSections(movies) {
             const card = document.createElement('div');
             card.className = 'movie-card';
             card.tabIndex = 0;
-            card.dataset.preview = movie.video; // <-- enlace de Google Sheets
             card.innerHTML = `
-                <a href="#" onclick="return false;">
+                <a href="${movie.video}" target="_blank">
                     <img src="${movie.poster}" alt="${movie.titulo}">
                     <div class="movie-title">${movie.titulo}</div>
                 </a>
@@ -222,6 +220,7 @@ function createGenreSections(movies) {
 
 function enableRemoteNavigation() {
     let focusable = Array.from(document.querySelectorAll('.movie-card'));
+    let currentFocus = 0;
     if(focusable.length) focusable[0].focus();
 
     document.addEventListener('keydown', e => {
@@ -250,10 +249,8 @@ function enableRemoteNavigation() {
                 }
                 break;
             case 'Enter':
-                const previewLink = document.activeElement.dataset.preview;
-                if(previewLink) {
-                    window.location.href = previewLink; // abre en la misma ventana reemplazando el index
-                }
+                const link = document.activeElement.querySelector('a');
+                if(link) link.click();
                 break;
         }
     });
